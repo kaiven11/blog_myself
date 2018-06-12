@@ -1,0 +1,102 @@
+{% extends "blog/base.html" %}
+{% load tags_util %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/prismss.css' %}">
+<link rel="stylesheet" href="{% static 'plugin/bootstrap3/css/bootstrap.css' %}">
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
+
+
+
+
+
+{% block artical %}
+<article class="post">
+
+    <header>
+        <div class="title">
+            <h2>{{ artical_obj.title }}</h2>
+            <p>{{ artical_obj.describe }}</p>
+        </div>
+        <div class="meta">
+            <time class="published" datetime="{{ time }}">{{ artical_obj.time|date }}</time>
+            <a href="#" class="author"><span class="name">{{ artical_obj.author }}</span><img src="/static/images/avatar.jpg" alt="" />
+
+            </a>
+            <span>分类:{{ artical_obj.category }}</span>
+
+        </div>
+    </header>
+    <img src="{{ artical_obj.articalimg_set.first.imgfile.url }}" alt="" />
+    <p>{{ artical_obj.content|safe }}</p>
+
+</article>
+
+<div class="panel panel-default">
+    <h4 style="color: #0e90d2">评论</h4>
+{#    <h4 id="tiaoshu" style="float: right">{{ artical_obj }}</h4>#}
+    <div style="clear: both;"></div>
+    {% if not request.user.pk %}
+    <div class="panel-heading">
+
+    <h3 class="panel-title">请先<a href="/account/login?next={{ request.path }}">登陆</a>后在评论</h3>
+
+    </div>
+    {% endif %}
+  <div class="panel-body">
+
+      <form method="post" action="{%url "usercomment" %}">
+            {{ myform.content }}
+           <input type="hidden" value="{{ request.user }}" name="user">
+           <input type="hidden" value="{{ artical_obj.id }}" name="artical">
+
+            <button id="postcoment" class="button button-primary-flat button-rounded pull-right
+            no-login
+            " type="submit" id="submit-button">
+                <i class="fa fa-check-square-o"></i>
+                提交评论
+            </button>
+    </form>
+
+</div>
+<HR>
+<div class="gencomment"></div>
+
+
+</div>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block script %}
+{% load static %}
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+{#<script src="{% static 'js/prisms.js' %}"></script>#}
+<script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
+<script src="{% static 'plugin/bootstrap3/js/bootstrap.js' %}"></script>
+
+
+<script>
+
+$('#postcoment').on("click",function(){
+
+    if (!$('.panel-title').length==0){
+        alert('请先登陆再进行评论！');
+        return false;
+    }
+
+});
+
+
+
+$(".django-ckeditor-widget").removeAttr('style');
+$.get("{% url "comment_tackle" artical_obj.id %}",function(data){
+    $('.gencomment').after(data);
+    $('#tiaoshu').val(5);
+});
+</script>
+{% endblock %}

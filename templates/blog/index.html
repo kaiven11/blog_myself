@@ -1,0 +1,80 @@
+{% extends "blog/base.html" %}
+{% load tags_util %}
+
+<!--artical -->
+{% block artical %}
+{% for item in articals %}
+<article class="post">
+    <input type="hidden" value="{{ item.id }}">
+    <header>
+        <div class="title">
+            <h2><a href="{% url "detail_artical" item.id %}" target="_blank">{{ item.title }}</a></h2>
+            <p>{{ item.describe }}</p>
+        </div>
+        <div class="meta">
+
+            <time class="published" datetime="{{ item.time }}">{{ item.time|date }}</time>
+            <a href="#" class="author"><span class="name">{{ item.author }}</span><img src="/static/images/avatar.jpg" alt="" /></a>
+        </div>
+    </header>
+    {% if item|tackleimg  %}
+        <a href="{% url "detail_artical" item.id %}" target="_blank" class="image featured"><img src="{{item.articalimg_set.first.imgfile.url}}" alt="" height="378px" width="931px"/></a>
+    {% endif %}
+    <p id="short_content{{ item.id }}">{% cache_content item %}</p>
+
+    <footer>
+        <ul class="actions">
+            <li><a id="{{ item.id }}" href="javascript:void(0)" class="button continue big" >继续阅读</a></li>
+        </ul>
+    </footer>
+
+</article>
+{% endfor %}
+    <!-- pagination-->
+    <ul class="actions pagination">
+        {% if articals.has_previous %}
+
+            <li><a href="?page={{ articals.previous_page_number }}" class=" button big previous">previous</a></li>
+
+        {% else %}
+            <a href="#" class="disabled button big previous">Previous Page</a>
+        {% endif %}
+
+        {% if articals.has_next %}
+                <li><a href="?page={{ articals.next_page_number }}" class="button big next">Next Page</a></li>
+            {% else %}
+            <li><a href="#" class="disabled button big next">Next Page</a></li>
+        {% endif %}
+    </ul>
+
+
+
+{% endblock %}
+
+<!-- mini artical -->
+{% block miniartical %}
+
+ {% include "blog/miniartical.html" %}
+
+{% endblock %}
+
+<!-- posts artical -->
+
+{% block posts %}
+{% include "blog/posts.html" %}
+{% endblock %}
+
+<!--script -->
+
+{% block script %}
+
+    <script>
+    $('.continue').on("click",function(){
+{#        var a=$('input[type="hidden"]').value();#}
+        $(this).parents('footer').prev().append("fadfadfadf");
+        $(this).remove()
+    })
+
+    </script>
+
+{% endblock %}

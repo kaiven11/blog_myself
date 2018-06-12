@@ -1,0 +1,32 @@
+
+<ul class="posts">
+
+</ul>
+
+<script src="/static/assets/js/jquery.min.js"></script>
+
+<script>
+
+    $(function () {
+
+        $.get(url="{% url 'miniartical' %}",function(data){
+            $.each(JSON.parse(data),function (k,v) {
+               if (k==5){
+                   return false;
+               }
+               console.log(v.author,v.time);
+               var post_arg ="<li><article><header><h3><a href="+'/artical/artical_id='+v.id+">"+v.title+"</a></h3>"+
+                       " <time class='published' datetime="+v.time+'>'+v.time+"</time></header>"+
+                       "<a href="+'/media/'+v.articalimg__imgfile+" class='image'><img src="+'/media/'+v.articalimg__imgfile+" alt='' /></a></article></li>"
+
+
+               $('.posts').append(post_arg)
+
+
+        });
+
+    })
+
+    })
+
+</script>

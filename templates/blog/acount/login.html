@@ -1,0 +1,32 @@
+{% extends 'blog/base.html' %}
+
+{% block css %}
+
+    <style type="text/css">
+
+    .login{
+
+        margin: 10px  auto;
+        background-color: white;
+        border: 1px solid;
+        height: 480px;
+        width: 80%;
+        line-height: 120px;
+        text-align: center;
+
+    }
+
+    </style>
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="login">请登陆GITHUB账号,登陆后进行评论
+
+        <span><a href="https://github.com/login/oauth/authorize?client_id=Iv1.32b25dc897455227&response_type=code">点击授权</a></span>
+
+    </div>
+
+
+{% endblock %}

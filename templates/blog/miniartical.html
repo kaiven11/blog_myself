@@ -1,0 +1,54 @@
+
+{% load cache %}
+{#{% cache 600 miniarticalhb %}#}
+<div class="mini-posts">
+
+
+</div>
+{#{% endcache %}#}
+<script src="/static/assets/js/jquery.min.js"></script>
+<script>
+   $(function () {
+
+
+       $.get(url="{% url 'miniartical' %}",function(data){
+
+
+           $.each(JSON.parse(data),function (k,v) {
+
+               if (k==3){
+                   return false;
+
+               }
+               console.log(v.author,v.time)
+               var a='<article class="mini-post"><header>'+
+                   '<h3><a href=' +'/artical/artical_id='+
+                   v.id  +
+                   '>' +
+                   v.title+
+                   '</a></h3>' +
+                   '<time class="published" datetime='+
+                   v.time +
+                   '>'+v.time+
+                   '</time>' +
+                   '<a class="author" href="#"><img alt="" src="/static/images/avatar.jpg"></a>' +
+                   "</header>" +
+                   '<a class="image"   href="#"><img  alt="" height=209px width=409px src=' +"/media/"+
+                   v.articalimg__imgfile+
+                   '>' +
+                   '</a></article>';
+               if(!v.articalimg__imgfile){
+                   b=a.replace(/<a class="image".*/g,'');
+               }
+               $('.mini-posts').append(a);
+
+
+
+           })
+
+       })
+
+   })
+
+
+</script>
