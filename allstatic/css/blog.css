@@ -1,0 +1,31 @@
+.comment_list{
+    font-size: 16px;
+    /*border-radius:10px;*/
+    border:2px solid #a1a1a1;
+}
+.comment_item{
+    margin-left: 20px;
+    padding-top: 4px;
+    /*font-size: 16px;*/
+    background-color: white;
+}
+
+.comment_item .ttt{
+        margin-left: 18px;
+
+}
+.comment_item .reply{
+    text-decoration-line: none;
+}
+
+.comment_item .lou{
+    float: right;
+}
+
+
+.replay_item{
+
+    padding-top: 3px;
+    margin-left: 20px;
+    /*font-size: 15px;*/
+}

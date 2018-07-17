@@ -15,6 +15,9 @@ import requests
 def index(request):
     if request.method=="GET":
         print("来普通请求了！！！！！！！！！！")
+        #access times
+        accesstimes=models.count.objects.all().count()
+        print(accesstimes)
         artical_list=models.Artical.objects.all().order_by("-time")
         if  not cache.get('artical_list'):
             cache.set('artical_list',artical_list)
@@ -22,7 +25,7 @@ def index(request):
         page=request.GET.get('page')
         articals=paginator.get_page(page)
 
-    return render(request, "blog/index.html",{'articals':articals})
+    return render(request, "blog/index.html",{'articals':articals,'count':accesstimes})
 
 # @cache_page(60*15)
 def miniartical(request):

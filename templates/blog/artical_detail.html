@@ -8,10 +8,6 @@
 <link rel="stylesheet" href="{% static 'css/blog.css' %}">
 {% endblock %}
 
-
-
-
-
 {% block artical %}
 <article class="post">
 
@@ -47,7 +43,7 @@
     {% endif %}
   <div class="panel-body">
 
-      <form method="post" action="{%url "usercomment" %}">
+      <form name="editor1" method="post" action="{%url "usercomment" %}">
             {{ myform.content }}
            <input type="hidden" value="{{ request.user }}" name="user">
            <input type="hidden" value="{{ artical_obj.id }}" name="artical">
@@ -75,7 +71,6 @@
 {% load static %}
 <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
 <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
-{#<script src="{% static 'js/prisms.js' %}"></script>#}
 <script src="{% static 'ckeditor/ckeditor/plugins/prism/lib/prism/prism_patched.min.js' %}"></script>
 <script src="{% static 'plugin/bootstrap3/js/bootstrap.js' %}"></script>
 

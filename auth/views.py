@@ -10,7 +10,7 @@ from django.db.models import Q
 def userlogin(request):
     if request.method=="GET":
         request.session['next']=request.GET.get('next','/index')
-
+        print(request.user)
         return render(request,"blog/acount/login.html",)
 
 def userlogout(request):
@@ -20,6 +20,9 @@ def userlogout(request):
 
 def gihublogin(request):
     if request.method=="GET":
+        print(request.user,'help')
+        next_url=request.session['next']
+        print(next_url)
         code=request.GET.get('code')
         data={'code':code,
               'client_id':CLIENT_ID,
@@ -43,5 +46,5 @@ def gihublogin(request):
 
                 request.user=user
                 login(request,request.user)
-                return redirect(request.session['next'])
+                return redirect("/")
     return HttpResponse(r.content)

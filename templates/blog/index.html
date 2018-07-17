@@ -3,6 +3,7 @@
 
 <!--artical -->
 {% block artical %}
+    <input type="hidden" value="{{ count }}" name="accsstime">
 {% for item in articals %}
 <article class="post">
     <input type="hidden" value="{{ item.id }}">

@@ -11,7 +11,7 @@ from django.db.models import options
 # Create your models here.
 class Artical(models.Model):
 
-    title=models.CharField(max_length=600,unique=True)
+    title=models.CharField(max_length=600)
     content=RichTextUploadingField(null=True,blank=True)
     time=models.DateTimeField(auto_now_add=True)
     tags=models.ManyToManyField('Tags',)
@@ -148,17 +148,17 @@ class MyUserManager(BaseUserManager):
 class UserProfile(AbstractBaseUser,PermissionsMixin):
     '''博客系统用户'''
     password = models.CharField(('password'), max_length=128,help_text=mark_safe('''<a href="password/">重置密码</a>'''))# 重写继承类的pasword
-    name = models.CharField(max_length=32)
+    name = models.CharField(max_length=32,unique=True)
     avatar = models.URLField(null=True,blank=True)
-    github_id = models.PositiveIntegerField(null=True,unique=True)
+    github_id = models.PositiveIntegerField(null=True)
 
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     objects = MyUserManager()
     img_for_user=models.ImageField(upload_to=artical_img_path,null=True,default="/aa.jpg")
-    USERNAME_FIELD = 'github_id'
-    REQUIRED_FIELDS = ['name'] #just effect when create the super user
+    USERNAME_FIELD = 'name'
+    REQUIRED_FIELDS = ['github_id'] #just effect when create the super user
     #--------when you custom a user model,if you want the django admin access the model
             #you should define the follow fileds
     # --------------------------------------
@@ -198,3 +198,14 @@ class UserProfile(AbstractBaseUser,PermissionsMixin):
         if self.img_for_user.url:
             self.avatar=self.img_for_user.url
         super().save(*args, **kwargs)
+
+
+class count(models.Model):
+    # num=models.PositiveIntegerField(default=0)
+    IP=models.GenericIPAddressField()
+    date=models.DateField()
+    class Meta:
+        unique_together=(('IP','date',),)
+        verbose_name="访问次数"
+        verbose_name_plural='访问次数'
+
