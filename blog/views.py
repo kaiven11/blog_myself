@@ -8,6 +8,7 @@ from django.core.paginator import EmptyPage,PageNotAnInteger,Paginator
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
 from utils.comment_tackle import *
+from blog.artical_views_count import artical_vews
 from django.contrib.auth.decorators import  login_required
 import requests
 # @cache_page(60*15)
@@ -53,6 +54,7 @@ class JsonCu(json.JSONEncoder):
 #文章详情
 def artical_detail(request,aid):
     artical_obj=models.Artical.objects.get(id=aid)
+    artical_vews.send(sender=artical_obj,**{'aid':aid})
 
     myform = commnetform()
 
