@@ -42,7 +42,7 @@ openpyxl==2.5.3
 paramiko==2.4.1
 parsel==1.4.0
 pefile==2017.11.5
-Pillow==4.3.0
+Pillow==6.2.0
 pyasn1==0.4.2
 pyasn1-modules==0.2.1
 pycparser==2.18
