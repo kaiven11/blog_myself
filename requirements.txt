@@ -4,7 +4,7 @@ Django==2.0.5
 django-ckeditor==5.8.0
 django-cors-headers==3.2.0
 django-js-asset==1.2.2
-djangorestframework==3.10.3
+djangorestframework==3.11.2
 gpg==1.10.0
 idna==2.8
 iniparse==0.4
